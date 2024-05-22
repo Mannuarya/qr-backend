@@ -13,20 +13,21 @@ const User = require("./models/User");
 const verifyEmail = require("./utils/verifyEmail");
 
 const app = express();
-const PORT = process.env.PORT || 0;
+const PORT = process.env.PORT || 4000;
 const JWT_SECRET = "your_jwt_secret";
 
 mongoose.connect(
-  "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
+  // "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
+  "mongodb+srv://abhijeetsinghrana2003:mongoDBaBHI5@cluster0.dxdvwer.mongodb.net/",
 );
 
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 app.post(
   "/signup",
@@ -47,20 +48,23 @@ app.post(
     try {
       const user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: "User already exists" });
+        return res.status(205).json({ msg: "User already exists" });
       }
 
-        
-        
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const newUser = new User({ email, password: hashedPassword, name, contact, address });
-      await newUser.save();
-
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+        name,
+        contact,
+        address,
+      });
       const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
         expiresIn: "1h",
       });
       verifyEmail(email, token);
+      await newUser.save();
 
       res
         .status(201)
@@ -68,11 +72,11 @@ app.post(
     } catch (err) {
       res.status(500).json({ error: "Server error" });
     }
-  }
+  },
 );
 
-app.post("/verify-email", async (req, res) => {
-  const { token } = req.body;
+app.get("/verify-email", async (req, res) => {
+  const { token } = req.query;
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
@@ -84,7 +88,13 @@ app.post("/verify-email", async (req, res) => {
     user.isVerified = true;
     await user.save();
 
-    res.status(200).json({ msg: "Email verified successfully" });
+    res
+      .status(200)
+      .json({
+        msg: "Email verified successfully",
+        name: user.name,
+        email: user.email,
+      });
   } catch (err) {
     res.status(400).json({ error: "Invalid token" });
   }
