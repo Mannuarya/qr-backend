@@ -4,9 +4,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 const QRCode = require("qrcode");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 const { check, validationResult } = require("express-validator");
 
 const User = require("./models/User");
@@ -42,7 +42,7 @@ app.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name } = req.body;
+    const { email, password, name, contact, address } = req.body;
 
     try {
       const user = await User.findOne({ email });
@@ -52,7 +52,7 @@ app.post(
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const newUser = new User({ email, password: hashedPassword, name });
+      const newUser = new User({ email, password: hashedPassword, name, contact, address });
       await newUser.save();
 
       const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
