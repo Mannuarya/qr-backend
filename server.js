@@ -13,7 +13,7 @@ const User = require("./models/User");
 const verifyEmail = require("./utils/verifyEmail");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 0;
 const JWT_SECRET = "your_jwt_secret";
 
 mongoose.connect(
