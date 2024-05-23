@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 4000;
 const JWT_SECRET = "your_jwt_secret";
 
 mongoose.connect(
-  // "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
-  "mongodb+srv://abhijeetsinghrana2003:mongoDBaBHI5@cluster0.dxdvwer.mongodb.net/",
+  "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
+  
 );
 
 app.use(cors());
