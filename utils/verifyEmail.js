@@ -13,7 +13,7 @@ const verifyEmail = async (email, token) => {
 
   const frontendLink = `https://9000-idx-qr-service-x-1716379111013.cluster-fu5knmr55rd44vy7k7pxk74ams.cloudworkstations.dev/verify-email?token=${token}`;
 
-  //update it with your frontend link an add last /verify-email?token=${token}
+  //update it with your frontend link an add this line at last /verify-email?token=${token}
 
   const mailOptions = {
     from: "mannuarya2002@gmail.com",
