@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 4000;
 const JWT_SECRET = "your_jwt_secret";
 
 mongoose.connect(
-  "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
-  
+  // "mongodb+srv://mannuarya2002:manishmongo@cluster0.kquyzjn.mongodb.net/",
+  "mongodb+srv://abhijeetsinghrana2003:mongoDBaBHI5@cluster0.dxdvwer.mongodb.net/",
 );
 
 app.use(cors());
@@ -88,13 +88,11 @@ app.get("/verify-email", async (req, res) => {
     user.isVerified = true;
     await user.save();
 
-    res
-      .status(200)
-      .json({
-        msg: "Email verified successfully",
-        name: user.name,
-        email: user.email,
-      });
+    res.status(200).json({
+      msg: "Email verified successfully",
+      name: user.name,
+      email: user.email,
+    });
   } catch (err) {
     res.status(400).json({ error: "Invalid token" });
   }
@@ -127,7 +125,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/user", async (req, res) => {
-  const token = req.header("x-auth-token");
+  const token = req.header("auth");
 
   if (!token) {
     return res.status(401).json({ msg: "No token, authorization denied" });
@@ -147,6 +145,8 @@ app.get("/user", async (req, res) => {
     res.status(400).json({ msg: "Token is not valid" });
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
