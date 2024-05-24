@@ -90,9 +90,9 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
 
-    if (!user.isVerified) {
-      return res.status(400).json({ msg: "Please verify your email" });
-    }
+    // if (!user.isVerified) {
+    //   return res.status(400).json({ msg: "Please verify your email" });
+    // }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
