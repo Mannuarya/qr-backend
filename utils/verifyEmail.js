@@ -14,7 +14,7 @@ const verifyEmail = async (email, token) => {
     },
   });
 
-  const frontendLink = `http://localhost:5000/verify-email?token=${token}`;
+  const frontendLink = `http://localhost:5173/verify-email?token=${token}`;
 
   const mailOptions = {
     from: "mannuarya2002@gmail.com",
